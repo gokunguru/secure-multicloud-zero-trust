@@ -45,3 +45,19 @@ output "cloudtrail_name" {
 output "guardduty_detector_id" {
   value = aws_guardduty_detector.main.id
 }
+
+output "alb_dns_name" {
+  value = aws_lb.app.dns_name
+}
+
+output "alb_arn" {
+  value = aws_lb.app.arn
+}
+
+output "waf_web_acl_arn" {
+  value = aws_wafv2_web_acl.main.arn
+}
+
+output "waf_web_acl_id" {
+  value = aws_wafv2_web_acl.main.id
+}
