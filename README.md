@@ -31,6 +31,11 @@ The AWS part currently includes:
 - CloudTrail enabled for audit logging
 - GuardDuty enabled for threat detection
 - Security Hub enabled with AWS Foundational Security Best Practices
+- Public Application Load Balancer as the controlled internet-facing entry point
+- AWS WAF associated with the ALB
+- AWS Managed Rules:
+  - Common Rule Set
+  - Known Bad Inputs Rule Set
 
 ### Azure Foundation
 The Azure part will include:
@@ -113,6 +118,9 @@ terraform destroy -var-file=dev.tfvars
 | Weak data protection | S3 logs are encrypted using KMS |
 | Public access to logs | S3 public access block is enabled |
 | Uncontrolled infrastructure changes | Terraform provides reproducible deployments |
+| Web application attacks | AWS WAF is associated with the public ALB |
+| Uncontrolled public entry point | ALB acts as the only public application entry point |
+| Known malicious payloads | AWS Managed WAF rules detect common and bad input patterns |
 
 ## Roadmap
 - Add AWS WAF and Application Load Balancer
