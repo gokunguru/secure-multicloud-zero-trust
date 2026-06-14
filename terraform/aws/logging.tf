@@ -48,3 +48,37 @@ resource "aws_s3_bucket_public_access_block" "security_logs" {
   ignore_public_acls      = true
   restrict_public_buckets = true
 }
+
+resource "aws_cloudtrail" "main" {
+  name                          = "${local.name_prefix}-cloudtrail"
+  s3_bucket_name                = aws_s3_bucket.security_logs.id
+  include_global_service_events = true
+  is_multi_region_trail         = true
+  enable_logging                = true
+
+  kms_key_id = aws_kms_key.logs.arn
+
+  event_selector {
+    read_write_type           = "All"
+    include_management_events = true
+  }
+
+  tags = merge(local.tags, {
+    Name = "${local.name_prefix}-cloudtrail"
+  })
+}
+
+resource "aws_guardduty_detector" "main" {
+  enable = true
+
+  tags = merge(local.tags, {
+    Name = "${local.name_prefix}-guardduty"
+  })
+}
+
+resource "aws_securityhub_account" "main" {}
+
+resource "aws_securityhub_standards_subscription" "aws_foundational" {
+  depends_on    = [aws_securityhub_account.main]
+  standards_arn = "arn:aws:securityhub:${var.aws_region}::standards/aws-foundational-security-best-practices/v/1.0.0"
+}
