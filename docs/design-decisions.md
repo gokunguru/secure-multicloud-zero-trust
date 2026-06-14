@@ -113,7 +113,17 @@ Resources should be deployed only when needed and destroyed after testing.
 
 Future improvements should include budget alerts and cost monitoring.
 
-## 13. Future Improvements
+## 13. NAT Gateway Strategy
+
+Private subnets require controlled outbound internet access for use cases such as package updates, security agents, or communication with external APIs.
+
+A NAT Gateway is deployed in the public subnet to allow resources in private subnets to initiate outbound connections without being directly reachable from the internet.
+
+This preserves the private nature of the application and database layers while still enabling controlled outbound connectivity.
+
+However, NAT Gateway can generate ongoing cloud costs. For this reason, this project is designed to be deployed only for testing and destroyed immediately after validation.
+
+## 14. Future Improvements
 
 Planned improvements include:
 
