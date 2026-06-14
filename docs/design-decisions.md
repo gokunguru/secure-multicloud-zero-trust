@@ -123,7 +123,24 @@ This preserves the private nature of the application and database layers while s
 
 However, NAT Gateway can generate ongoing cloud costs. For this reason, this project is designed to be deployed only for testing and destroyed immediately after validation.
 
-## 14. Future Improvements
+## 14. ALB and WAF Strategy
+
+The Application Load Balancer is used as the controlled public entry point of the AWS architecture.
+
+Instead of exposing application resources directly to the internet, external traffic reaches the ALB first. The application layer remains private and only accepts traffic from the ALB security group.
+
+AWS WAF is associated with the ALB to add an application-layer protection mechanism.
+
+The first version uses AWS managed rule groups:
+
+- AWSManagedRulesCommonRuleSet
+- AWSManagedRulesKnownBadInputsRuleSet
+
+These rules help detect and block common web attacks and known malicious request patterns.
+
+This design improves the security posture of the public entry point while keeping the backend layers isolated.
+
+## 15. Future Improvements
 
 Planned improvements include:
 
