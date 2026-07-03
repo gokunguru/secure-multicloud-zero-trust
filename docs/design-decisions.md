@@ -150,7 +150,15 @@ The endpoint is associated with the private application and private database rou
 
 This approach also reduces dependency on the NAT Gateway for S3 access.
 
-## 16. Future Improvements
+## 16. CloudWatch Logs VPC Endpoint Strategy
+
+An Interface VPC Endpoint for CloudWatch Logs is added to allow private resources to send logs to CloudWatch without requiring direct internet access.
+
+The endpoint is deployed inside private subnets and protected by a dedicated security group allowing HTTPS traffic only from the VPC CIDR range.
+
+This improves the security posture by reducing dependency on public internet paths and supporting private observability patterns.
+
+## 17. Future Improvements
 
 Planned improvements include:
 
