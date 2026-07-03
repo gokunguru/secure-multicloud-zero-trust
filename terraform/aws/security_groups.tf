@@ -83,3 +83,11 @@ resource "aws_security_group" "db" {
     Name = "${local.name_prefix}-sg-db"
   })
 }
+
+resource "aws_default_security_group" "default" {
+  vpc_id = aws_vpc.main.id
+
+  tags = merge(local.tags, {
+    Name = "${local.name_prefix}-default-sg-locked"
+  })
+}
