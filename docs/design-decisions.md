@@ -140,7 +140,17 @@ These rules help detect and block common web attacks and known malicious request
 
 This design improves the security posture of the public entry point while keeping the backend layers isolated.
 
-## 15. Future Improvements
+## 15. S3 VPC Endpoint Strategy
+
+A Gateway VPC Endpoint for S3 is added to allow private subnets to access Amazon S3 without routing traffic through the public internet.
+
+This improves the security posture of the private application and database layers by keeping S3 communication inside the AWS network.
+
+The endpoint is associated with the private application and private database route tables.
+
+This approach also reduces dependency on the NAT Gateway for S3 access.
+
+## 16. Future Improvements
 
 Planned improvements include:
 
