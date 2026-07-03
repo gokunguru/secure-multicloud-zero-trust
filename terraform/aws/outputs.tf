@@ -61,3 +61,15 @@ output "waf_web_acl_arn" {
 output "waf_web_acl_id" {
   value = aws_wafv2_web_acl.main.id
 }
+
+output "s3_vpc_endpoint_id" {
+  value = aws_vpc_endpoint.s3.id
+}
+
+output "cloudwatch_logs_vpc_endpoint_id" {
+  value = aws_vpc_endpoint.cloudwatch_logs.id
+}
+
+output "vpc_endpoints_security_group_id" {
+  value = aws_security_group.vpc_endpoints.id
+}
