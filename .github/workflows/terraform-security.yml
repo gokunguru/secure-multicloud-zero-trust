@@ -46,7 +46,12 @@ jobs:
           working_directory: terraform/aws
           soft_fail: true
 
+      - name: Install Gitleaks
+        run: |
+            curl -sSfL https://raw.githubusercontent.com/gitleaks/gitleaks/master/scripts/install.sh | sh -s -- -b /usr/local/bin
+        working-directory: .
+  
       - name: Run Gitleaks Secret Scan
-        uses: gitleaks/gitleaks-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+            gitleaks detect --source . --redact --verbose
+        working-directory: .
