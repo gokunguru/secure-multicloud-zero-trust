@@ -46,12 +46,15 @@ jobs:
           working_directory: terraform/aws
           soft_fail: true
 
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
       - name: Install Gitleaks
-        run: |
-            curl -sSfL https://raw.githubusercontent.com/gitleaks/gitleaks/master/scripts/install.sh | sh -s -- -b /usr/local/bin
+        run: go install github.com/gitleaks/gitleaks/v8@latest
         working-directory: .
-  
+
       - name: Run Gitleaks Secret Scan
-        run: |
-            gitleaks detect --source . --redact --verbose
+        run: ~/go/bin/gitleaks detect --source . --redact --verbose
         working-directory: .
