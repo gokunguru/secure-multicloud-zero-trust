@@ -6,6 +6,17 @@ resource "aws_lb" "app" {
   subnets            = [aws_subnet.public.id]
 
   enable_deletion_protection = false
+  drop_invalid_header_fields = true
+
+  access_logs {
+
+    bucket = aws_s3_bucket.security_logs.id
+
+    prefix = "alb"
+
+    enabled = true
+
+  }
 
   tags = merge(local.tags, {
     Name = "${local.name_prefix}-alb"
