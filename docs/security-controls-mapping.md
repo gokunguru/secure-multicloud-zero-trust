@@ -32,6 +32,9 @@ The goal is to demonstrate how each architectural decision contributes to reduci
 | Log tampering | Logs are versioned | `aws_s3_bucket_versioning.security_logs` |
 | Log disclosure | Public access is blocked | `aws_s3_bucket_public_access_block.security_logs` |
 | Weak log confidentiality | Logs are encrypted using KMS | `aws_kms_key.logs` |
+| Confused deputy on log bucket | CloudTrail may only write for this trail ARN and account | `aws_s3_bucket_policy.security_logs` |
+| Confused deputy on log key | CloudTrail may only use the key for this trail ARN and account | `data.aws_iam_policy_document.logs_kms` |
+| Log interception in transit | Non-TLS requests to the log bucket are denied | `aws_s3_bucket_policy.security_logs` |
 | Undetected suspicious behavior | Threat detection is enabled | `aws_guardduty_detector.main` |
 | Security misconfiguration | Security best practices are monitored | `aws_securityhub_account.main` |
 | Manual deployment mistakes | Terraform is the source of truth | Terraform configuration files |

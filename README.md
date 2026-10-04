@@ -26,9 +26,9 @@ The AWS part currently includes:
   - ALB layer exposed only on HTTP/HTTPS
   - Application layer accessible only from ALB
   - Database layer accessible only from application layer
-- Encrypted S3 bucket for security logs
+- Encrypted S3 bucket for security logs, TLS-only access enforced by bucket policy
 - KMS key with key rotation enabled
-- CloudTrail enabled for audit logging
+- CloudTrail enabled for audit logging, with least-privilege bucket and key policies scoped to this trail and account (`aws:SourceArn` / `aws:SourceAccount`)
 - GuardDuty enabled for threat detection
 - Security Hub enabled with AWS Foundational Security Best Practices
 - Public Application Load Balancer as the controlled internet-facing entry point
@@ -117,6 +117,8 @@ terraform destroy -var-file=dev.tfvars
 | Threat detection gap | GuardDuty is enabled |
 | Weak data protection | S3 logs are encrypted using KMS |
 | Public access to logs | S3 public access block is enabled |
+| Log bucket or key abused by another trail or account (confused deputy) | Bucket and KMS key policies only allow CloudTrail for this trail ARN and account |
+| Log interception in transit | Bucket policy denies any request not made over TLS |
 | Uncontrolled infrastructure changes | Terraform provides reproducible deployments |
 | Web application attacks | AWS WAF is associated with the public ALB |
 | Uncontrolled public entry point | ALB acts as the only public application entry point |
